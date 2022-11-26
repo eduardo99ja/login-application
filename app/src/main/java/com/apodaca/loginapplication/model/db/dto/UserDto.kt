@@ -1,4 +1,4 @@
-package com.apodaca.loginapplication.model
+package com.apodaca.loginapplication.model.db.dto
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
