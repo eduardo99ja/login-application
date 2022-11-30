@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class UserDto(
     @PrimaryKey(autoGenerate = true)
-    val uid: Int,
+    val uid: Int = 0,
     val email: String,
     val password: String
 )
