@@ -7,6 +7,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class Activity : AppCompatActivity() {
+class Activity : AppCompatActivity(R.layout.activity) {
+
 
 }
