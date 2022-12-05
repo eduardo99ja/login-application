@@ -3,6 +3,7 @@ package com.apodaca.loginapplication.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apodaca.loginapplication.usecase.GetUserByEmailUseCase
 import com.apodaca.loginapplication.usecase.LoginUserUseCase
 import com.apodaca.loginapplication.usecase.RegisterUserUseCase
 import com.apodaca.loginapplication.utils.isValidEmail
@@ -18,9 +19,14 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUserUseCase: LoginUserUseCase,
-    private val registerUserUseCase: RegisterUserUseCase
+    private val registerUserUseCase: RegisterUserUseCase,
+    private val getUserByEmailUseCase: GetUserByEmailUseCase
 ) : ViewModel() {
 
+    private val _bottomSheetShow = MutableSharedFlow<Unit>()
+    val bottomSheetShow: Flow<Unit> = _bottomSheetShow
+    private val _forgotPasswordGetSuccess = MutableSharedFlow<String>()
+    val forgotPasswordGetSuccess: Flow<String> = _forgotPasswordGetSuccess
     private val _registerSuccess = MutableSharedFlow<Unit>()
     val registerSuccess: Flow<Unit> = _registerSuccess
     private val _error = MutableSharedFlow<Unit>()
@@ -70,7 +76,10 @@ class LoginViewModel @Inject constructor(
     }
 
     fun forgotPasswordClicked() {
-
+        Timber.d("forgotPasswordClicked")
+        viewModelScope.launch {
+            _bottomSheetShow.emit(Unit)
+        }
     }
 
 
@@ -84,6 +93,18 @@ class LoginViewModel @Inject constructor(
         )
 
         return isEmailValid && isPasswordValid
+    }
+
+    fun forgotPasswordSubmitClicked(email: String) {
+        viewModelScope.launch {
+            try{
+                val userDto =  getUserByEmailUseCase(email)
+                _forgotPasswordGetSuccess.emit(userDto.password)
+            } catch (e: Exception) {
+                Timber.e("forgotPasswordSubmitClicked: failed, exception: ${e.message}")
+                _error.emit(Unit)
+            }
+        }
     }
 
 

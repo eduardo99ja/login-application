@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.apodaca.loginapplication.R
+import com.apodaca.loginapplication.databinding.ForogotPasswordDialogBinding
 import com.apodaca.loginapplication.databinding.FragmentLoginBinding
 import com.apodaca.loginapplication.utils.getColorByAttribute
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -45,6 +47,10 @@ class LoginFragment : Fragment() {
                 binding.passwordEditText.text.toString()
             )
         }
+
+        binding.forgotPasswordView.setOnClickListener {
+            viewModel.forgotPasswordClicked()
+        }
         with(lifecycleScope) {
             viewModel.state.onEach { state ->
                 Timber.d(state.toString())
@@ -77,6 +83,20 @@ class LoginFragment : Fragment() {
                     requireContext().getColorByAttribute(androidx.appcompat.R.attr.colorPrimary)
                 )
             }.launchIn(this)
+
+            viewModel.bottomSheetShow.onEach {
+                Timber.d("Showing bottom sheet dialog")
+                showForgotPasswordBottomSheetDialog()
+            }.launchIn(this)
+
+            viewModel.forgotPasswordGetSuccess.onEach {
+                Timber.d("Forgot password success!")
+                showSnackbar(
+                    resources.getString(R.string.login_your_password_is, it),
+                    requireContext().getColorByAttribute(com.google.android.material.R.attr.colorOnSecondary)
+                )
+            }.launchIn(this)
+
         }
     }
 
@@ -90,6 +110,19 @@ class LoginFragment : Fragment() {
             )
             .setBackgroundTint(backgroundTint)
             .show()
+    }
+
+    private fun showForgotPasswordBottomSheetDialog() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        val layoutInflater = LayoutInflater.from(requireContext())
+        val forgotPasswordBinding = ForogotPasswordDialogBinding.inflate(layoutInflater)
+        bottomSheetDialog.setContentView(forgotPasswordBinding.root)
+
+        forgotPasswordBinding.submitButton.setOnClickListener {
+            viewModel.forgotPasswordSubmitClicked(forgotPasswordBinding.usernameEditText.text.toString())
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.show()
     }
 
     override fun onDestroyView() {
