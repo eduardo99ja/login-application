@@ -8,6 +8,8 @@
     <action
         android:id="@+id/logOut"
         app:destination="@id/loginfragment"
+        app:enterAnim="@anim/slide_in_top"
+        app:exitAnim="@anim/slide_out_top"
         app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true" />
 
@@ -16,16 +18,19 @@
         android:id="@+id/loginfragment"
         android:name="com.apodaca.loginapplication.screens.login.LoginFragment"
         android:label="Loginfragment"
-        tools:layout="@layout/fragment_login"
-        >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginfragment_to_loggedInFragment"
-            app:destination="@id/loggedInFragment" />
+            app:destination="@id/loggedInFragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/slide_out_top"
+            app:popUpTo="@id/loginfragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/loggedInFragment"
         android:name="com.apodaca.loginapplication.screens.loggedin.LoggedInFragment"
         android:label="LoggedInFragment"
-        tools:layout="@layout/fragment_logged_in"/>
+        tools:layout="@layout/fragment_logged_in" />
 
 </navigation>

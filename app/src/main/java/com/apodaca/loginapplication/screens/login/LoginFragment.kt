@@ -71,7 +71,11 @@ class LoginFragment : Fragment() {
             viewModel.error.onEach { error ->
                 Timber.d(error.toString())
                 showSnackbar(
-                    resources.getString(R.string.login_failed),
+                    if (error == LoginErrorType.LOGIN) {
+                        resources.getString(R.string.login_failed)
+                    } else {
+                        resources.getString(R.string.login_error)
+                    },
                     requireContext().getColorByAttribute(androidx.appcompat.R.attr.colorError)
                 )
 
