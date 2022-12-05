@@ -1,4 +1,4 @@
-package com.apodaca.loginapplication.screens
+package com.apodaca.loginapplication.screens.login
 
 data class LoginState(
     val isEmailValid: Boolean = true,

@@ -1,4 +1,4 @@
-package com.apodaca.loginapplication.screens
+package com.apodaca.loginapplication.screens.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.apodaca.loginapplication.R
 import com.apodaca.loginapplication.databinding.ForogotPasswordDialogBinding
 import com.apodaca.loginapplication.databinding.FragmentLoginBinding
@@ -95,6 +96,10 @@ class LoginFragment : Fragment() {
                     resources.getString(R.string.login_your_password_is, it),
                     requireContext().getColorByAttribute(com.google.android.material.R.attr.colorOnSecondary)
                 )
+            }.launchIn(this)
+
+            viewModel.navigateToApp.onEach {
+                findNavController().navigate(R.id.action_loginfragment_to_loggedInFragment)
             }.launchIn(this)
 
         }
