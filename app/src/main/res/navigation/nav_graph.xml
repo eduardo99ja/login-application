@@ -8,8 +8,18 @@
 
     <fragment
         android:id="@+id/loginfragment"
-        android:name="com.apodaca.loginapplication.screens.LoginFragment"
+        android:name="com.apodaca.loginapplication.screens.login.LoginFragment"
         android:label="Loginfragment"
         tools:layout="@layout/fragment_login"
-        />
+        >
+        <action
+            android:id="@+id/action_loginfragment_to_loggedInFragment"
+            app:destination="@id/loggedInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loggedInFragment"
+        android:name="com.apodaca.loginapplication.screens.loggedin.LoggedInFragment"
+        android:label="LoggedInFragment"
+        tools:layout="@layout/fragment_logged_in"/>
+
 </navigation>

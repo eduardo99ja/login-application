@@ -146,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_16"
             android:gravity="center"
-            android:text="@string/login_powered_by_apodaca"
+            android:text="@string/powered_by_apodaca"
             android:textColor="?attr/colorPrimaryVariant" />
     </LinearLayout>
 
