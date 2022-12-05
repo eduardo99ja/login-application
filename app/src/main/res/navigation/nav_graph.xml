@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginfragment">
+    app:startDestination="@id/loggedInFragment">
+
+    <action
+        android:id="@+id/logOut"
+        app:destination="@id/loginfragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
 
 
     <fragment
