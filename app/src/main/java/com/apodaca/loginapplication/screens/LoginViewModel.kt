@@ -26,6 +26,10 @@ class LoginViewModel @Inject constructor(
     private val _state = MutableStateFlow(LoginState())
     val state: Flow<LoginState> = _state
 
+    init {
+        Timber.d("init")
+    }
+
 
     fun loginClicked(email: String, password: String) {
         Timber.d("loginClicked: $email, $password")
