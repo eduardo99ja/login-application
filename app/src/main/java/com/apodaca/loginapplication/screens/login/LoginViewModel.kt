@@ -107,5 +107,11 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun onRegistrationSnackbarDismissed() {
+        viewModelScope.launch {
+            _navigateToApp.emit(Unit)
+        }
+    }
+
 
 }
