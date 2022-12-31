@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.apodaca.loginapplication.usecase.GetForgottenPasswordUseCase
 import com.apodaca.loginapplication.usecase.LoginUserUseCase
 import com.apodaca.loginapplication.usecase.RegisterUserUseCase
+import com.apodaca.loginapplication.usecase.Result
 import com.apodaca.loginapplication.utils.isValidEmail
 import com.apodaca.loginapplication.utils.isValidPassword
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -97,12 +98,9 @@ class LoginViewModel @Inject constructor(
 
     fun forgotPasswordSubmitClicked(email: String) {
         viewModelScope.launch {
-            try {
-                val password = getForgottenPasswordUseCase(email)
-                _forgotPasswordGetSuccess.emit(password)
-            } catch (e: Exception) {
-                Timber.e("forgotPasswordSubmitClicked: failed, exception: ${e.message}")
-                _error.emit(LoginErrorType.FORGOT_PASSWORD)
+            when (val result = getForgottenPasswordUseCase(email)) {
+                is Result.Success -> _forgotPasswordGetSuccess.emit(result.password)
+                is Result.Failure -> _error.emit(LoginErrorType.FORGOT_PASSWORD)
             }
         }
     }

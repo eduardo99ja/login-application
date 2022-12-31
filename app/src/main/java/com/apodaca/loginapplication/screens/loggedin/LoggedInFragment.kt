@@ -9,8 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.apodaca.loginapplication.R
 import com.apodaca.loginapplication.databinding.FragmentLoggedInBinding
-import com.apodaca.loginapplication.databinding.FragmentLoginBinding
-import com.apodaca.loginapplication.screens.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
